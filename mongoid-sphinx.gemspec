@@ -16,9 +16,9 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = ">= 1.3.6"
 
-  s.add_dependency("mongoid", ["= 2.0.0.beta.19"])
+  s.add_dependency("mongoid", ["~> 2.0.0.beta.19"])
   s.add_dependency("riddle", ["~> 1.1.0"])
-
+  s.add_dependency("escape_utils", ["~> 0.1.9"])
   s.files        = Dir.glob("lib/**/*") + %w(README.rdoc)
   s.require_path = 'lib'
 end

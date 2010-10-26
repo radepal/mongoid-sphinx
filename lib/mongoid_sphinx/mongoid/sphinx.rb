@@ -14,7 +14,7 @@ module Mongoid
       end
       
       def search(query, options = {})
-        client = ThinkingSphinx::Configuration.instance.client
+        client = MongoidSphinx::Configuration.instance.client
                  
         query = query + " @classname #{@document.class.to_s}"
         
