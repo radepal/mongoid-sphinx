@@ -112,7 +112,8 @@ module MongoidSphinx #:nodoc:
         
         klass.search_fields.each do |key|
           value = hash[key.to_s]
-          puts "<#{key}><![CDATA[[#{EscapeUtils.escape_html(value.to_s)}]]></#{key}>"
+         # puts "<#{key}><![CDATA[[#{EscapeUtils.escape_html(value.to_s)}]]></#{key}>"
+         puts "<#{key}><![CDATA[[#{value.to_s}]]></#{key}>"
         end
 
         puts '</sphinx:document>'
