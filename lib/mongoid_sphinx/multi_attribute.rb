@@ -51,7 +51,7 @@ module MongoidSphinx #:nodoc:
       offset = 0
       multi = multi.split(',') if not multi.kind_of? Array
 
-      return multi.collect {|x| (x.to_i-(offset+=0x0100)).chr}.to_s
+      return multi.collect {|x| (x.to_i-(offset+=0x0100)).chr}.join
     end
   end
 end

@@ -15,9 +15,8 @@ module Mongoid
       
       def search(query, options = {})
         client = MongoidSphinx::Configuration.instance.client
-                 
-        query = query + " @classname #{@document.class.to_s}"
-        
+        query = query + " @classname #{self}"
+
         client.match_mode = options[:match_mode] || :extended
         client.limit = options[:limit] if options.key?(:limit)
         client.max_matches = options[:max_matches] if options.key?(:max_matches)
@@ -36,7 +35,8 @@ module Mongoid
             classname = MongoidSphinx::MultiAttribute.decode(row[:attributes]['csphinx-class'])
             row[:doc].to_s rescue nil
           end.compact
-          
+
+          ids = ids.collect {|x| BSON::ObjectId.from_string((100000000000000000000000+x.to_i).to_s)} 
           return ids if options[:raw]
           return Object.const_get(classname).find(ids)
         else
