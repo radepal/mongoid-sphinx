@@ -17,9 +17,12 @@ module Mongoid
         client = MongoidSphinx::Configuration.instance.client
         query = query + " @classname #{self}"
 
-        client.match_mode = options[:match_mode] || :extended
         client.limit = options[:limit] if options.key?(:limit)
+        client.match_mode = options[:match_mode] || :extended
+        
         client.max_matches = options[:max_matches] if options.key?(:max_matches)
+        client.rank_mode = options[:rank_mode] if options.key?(:rank_mode)
+        client.sort_mode = options[:sort_mode] if options.key?(:sort_mode)
         
         if options.key?(:sort_by)
           client.sort_mode = :extended
@@ -29,7 +32,7 @@ module Mongoid
         result = client.query(query)
         
         #TODO
-        if result and result[:status] == 0 and (matches = result[:matches])
+        if result and result[:status] == 0 and (matches = result[:matches]) and result[:total_found]>0
           classname = nil
           ids = matches.collect do |row|
             classname = MongoidSphinx::MultiAttribute.decode(row[:attributes]['csphinx-class'])
